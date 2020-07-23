@@ -7,3 +7,10 @@ if __name__ == '__main__':
         print(db)
         for i in db:
             print(i)
+
+        list_0 = [1, 2, 3, 4, 5, 6]
+        for x in list_0:
+            if x < 3:
+                print('22222222222222')
+                continue
+        print('over')
