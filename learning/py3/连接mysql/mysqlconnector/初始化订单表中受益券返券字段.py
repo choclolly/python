@@ -131,8 +131,8 @@ if __name__ == '__main__':
                                 passwd=".05zf-+VCT0YeIfx",
                                 database="test_tea_uc") as order_1:
                             sql = 'UPDATE sdb_b2c_order SET receive_coin_num = %s,update_time = %s WHERE member_id = %s AND member_no = %s AND order_no = %s'
-                            order_0.execute(sql, na)
-                            if order_0.rowcount > 0:
+                            order_1.execute(sql, na)
+                            if order_1.rowcount > 0:
                                 x = count(1)
                                 print(
                                     str(x) + ",用户userId:{},订单编号:{},的用户编号是user_num:{},订单交易完成返券amount:{}".format(
@@ -153,8 +153,8 @@ if __name__ == '__main__':
                                 passwd="rmdj@+lbbA96C15v",
                                 database="mall_order_2") as order_2:
                             sql = 'UPDATE sdb_b2c_order SET receive_coin_num = %s,update_time = %s WHERE member_id = %s AND member_no = %s AND order_no = %s'
-                            order_0.execute(sql, na)
-                            if order_0.rowcount > 0:
+                            order_2.execute(sql, na)
+                            if order_2.rowcount > 0:
                                 x = count(1)
                                 print(
                                     str(x) + ",用户userId:{},订单编号:{},的用户编号是user_num:{},订单交易完成返券amount:{}".format(
