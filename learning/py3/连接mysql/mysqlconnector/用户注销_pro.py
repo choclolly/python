@@ -5,80 +5,56 @@ import uuid
 
 # 用户中心库
 user = mysql.connector.connect(
-    host="172.17.186.153",
-    port="3306",
-    user="test_tea_uc",
-    passwd="pw@kbm9p0Yl@!t3bZD",
-    database="test_tea_uc"
+    host="uc-mysql-master", port="3306", user="tea_uc", passwd="!xkpLr6aW2Z~XW!B8.k~",
+    database="tea_uc"
 )
 user_cursor = user.cursor()
 
 # 用户分片 偶
 user_0 = mysql.connector.connect(
-    host="172.17.186.153",
-    port="3306",
-    user="test_tea_uc_0",
-    passwd="L~+SJ*F^kon[t+10l6",
-    database="test_tea_uc_0"
+    host="shard-uc-1-master", port="3306", user="tea_uc_1", passwd="EpeL4fQO+]sPJDvt",
+    database="tea_uc_1"
 )
 user_cursor_0 = user_0.cursor()
 
 # 用户分片 奇
 user_1 = mysql.connector.connect(
-    host="172.17.186.153",
-    port="3306",
-    user="test_tea_uc_1",
-    passwd="]J1tFUzKh8oI#LU9ih",
-    database="test_tea_uc_1"
+    host="shard-uc-2-master", port="3306", user="ebs_manage", passwd="Xu~eQa(,.EBE]0ud8Spz",
+    database="tea_uc_2"
 )
 user_cursor_1 = user_1.cursor()
 
 # 订单中心库
 order = mysql.connector.connect(
-    host="172.17.186.153",
-    port="3306",
-    user="tea_admin_mall",
-    passwd="euRyC7S1Il75AiI",
-    database="tea_admin_mall"
+    host="order-mysql-master", port="3306", user="tea_admin_mall", passwd="euRyC7S1Il75AiI",
+    database="ebs_manage"
 )
 order_cursor = order.cursor()
 
 # 订单分片0
 order_0 = mysql.connector.connect(
-    host="172.17.186.153",
-    port="3307",
-    user="mall_order_1",
-    passwd="QwbchBKoizep",
-    database="mall_order_1"
+    host="shard-order-0-master", port="3306", user="mall_order_0", passwd="leREe6BAC_TndsJl",
+    database="mall_order_0"
 )
 order_cursor_0 = order_0.cursor()
 
 # 订单分片1
 order_1 = mysql.connector.connect(
-    host="172.17.186.154",
-    port="3308",
-    user="mall_order_2",
-    passwd="gozap123",
-    database="mall_order_2"
+    host="shard-order-1-master", port="3306", user="mall_order_1", passwd=".05zf-+VCT0YeIfx",
+    database="mall_order_1"
 )
 order_cursor_1 = order_1.cursor()
 
 # 订单分片2
-# order_2 = mysql.connector.connect(
-#     host="172.17.186.153",
-#     port="3306",
-#     user="tea_admin_mall",
-#     passwd="euRyC7S1Il75AiI",
-#     database="tea_admin_mall"
-# )
-# order_cursor_2 = order_2.cursor()
+order_2 = mysql.connector.connect(
+    host="shard-order-2-master", port="3306", user="mall_order_2", passwd="rmdj@+lbbA96C15v",
+    database="mall_order_2"
+)
+order_cursor_2 = order_2.cursor()
 
 # redis连接池
 pool = redis.ConnectionPool(
-    host="172.17.186.153",
-    port=6381,
-    password="aB(D2f9",
-    db='5',
+    host="100.114.66.90", port=5672, user="admin", password="Dayl@%L7r", db='5',
     max_connections=1024)
 conn = redis.Redis(connection_pool=pool)
 
@@ -256,60 +232,8 @@ for x in l_accord_with_condition_user_id:
     sdb_b2c_order_sql = "UPDATE sdb_b2c_order set state = 0, remark = '用户注销删除订单信息' where member_id = %s"
     sdb_b2c_order_savetea_sql = "UPDATE sdb_b2c_order_savetea set state = 0, remark = '用户注销删除存取茶单信息' where member_id = %s"
     na = (user_id,)
-    # i = int(str(userNum)) % 3
-    # if i == 0:
-    #     order_cursor_0.execute(sdb_b2c_order_query_sql, na)
-    #     result = order_cursor_0.fetchall()
-    #     order_cursor_0.execute(sdb_b2c_order_savetea_query_sql, na)
-    #     result2 = order_cursor_0.fetchall()
-    #     if len(result) != 0:
-    #         order_cursor_0.execute(sdb_b2c_order_sql, na)
-    #         order_0.commit()
-    #         s = s + sdb_b2c_order_sql + ";\n"
-    #     if len(result2) != 0:
-    #         order_cursor_0.execute(sdb_b2c_order_savetea_sql, na)
-    #         order_0.commit()
-    #         s = s + sdb_b2c_order_savetea_sql + ";\n"
-    # elif i == 1:
-    #     order_cursor_1.execute(sdb_b2c_order_query_sql, na)
-    #     result = order_cursor_1.fetchall()
-    #     order_cursor_1.execute(sdb_b2c_order_savetea_query_sql, na)
-    #     result2 = order_cursor_1.fetchall()
-    #     if len(result) != 0:
-    #         order_cursor_1.execute(sdb_b2c_order_sql, na)
-    #         order_1.commit()
-    #         s = s + sdb_b2c_order_sql + ";\n"
-    #     if len(result2) != 0:
-    #         order_cursor_1.execute(sdb_b2c_order_savetea_sql, na)
-    #         order_1.commit()
-    #         s = s + sdb_b2c_order_savetea_sql + ";\n"
-    # # elif i == 1:
-    # #     order_cursor_2.execute(sdb_b2c_order_query_sql, na)
-    # #     result = order_cursor_2.fetchall()
-    # #     order_cursor_2.execute(sdb_b2c_order_savetea_query_sql, na)
-    # #     result2 = order_cursor_2.fetchall()
-    # #     if len(result) != 0:
-    # #         order_cursor_2.execute(sdb_b2c_order_sql, na)
-    # #         order_2.commit()
-    # #     if len(result2) != 0:
-    # #         order_cursor_2.execute(sdb_b2c_order_savetea_sql, na)
-    # #         order_2.commit()
-
-    i = int(str(userNum)) % 2
+    i = int(str(userNum)) % 3
     if i == 0:
-        order_cursor_1.execute(sdb_b2c_order_query_sql, na)
-        result = order_cursor_1.fetchall()
-        order_cursor_1.execute(sdb_b2c_order_savetea_query_sql, na)
-        result2 = order_cursor_1.fetchall()
-        if len(result) != 0:
-            order_cursor_1.execute(sdb_b2c_order_sql, na)
-            order_1.commit()
-            s = s + sdb_b2c_order_sql + ";\n"
-        if len(result2) != 0:
-            order_cursor_1.execute(sdb_b2c_order_savetea_sql, na)
-            order_1.commit()
-            s = s + sdb_b2c_order_savetea_sql + ";\n"
-    else:
         order_cursor_0.execute(sdb_b2c_order_query_sql, na)
         result = order_cursor_0.fetchall()
         order_cursor_0.execute(sdb_b2c_order_savetea_query_sql, na)
@@ -322,18 +246,32 @@ for x in l_accord_with_condition_user_id:
             order_cursor_0.execute(sdb_b2c_order_savetea_sql, na)
             order_0.commit()
             s = s + sdb_b2c_order_savetea_sql + ";\n"
-
-    # elif i == 1:
-    #     order_cursor_2.execute(sdb_b2c_order_query_sql, na)
-    #     result = order_cursor_2.fetchall()
-    #     order_cursor_2.execute(sdb_b2c_order_savetea_query_sql, na)
-    #     result2 = order_cursor_2.fetchall()
-    #     if len(result) != 0:
-    #         order_cursor_2.execute(sdb_b2c_order_sql, na)
-    #         order_2.commit()
-    #     if len(result2) != 0:
-    #         order_cursor_2.execute(sdb_b2c_order_savetea_sql, na)
-    #         order_2.commit()
+    elif i == 1:
+        order_cursor_1.execute(sdb_b2c_order_query_sql, na)
+        result = order_cursor_1.fetchall()
+        order_cursor_1.execute(sdb_b2c_order_savetea_query_sql, na)
+        result2 = order_cursor_1.fetchall()
+        if len(result) != 0:
+            order_cursor_1.execute(sdb_b2c_order_sql, na)
+            order_1.commit()
+            s = s + sdb_b2c_order_sql + ";\n"
+        if len(result2) != 0:
+            order_cursor_1.execute(sdb_b2c_order_savetea_sql, na)
+            order_1.commit()
+            s = s + sdb_b2c_order_savetea_sql + ";\n"
+    elif i == 2:
+        order_cursor_2.execute(sdb_b2c_order_query_sql, na)
+        result = order_cursor_2.fetchall()
+        order_cursor_2.execute(sdb_b2c_order_savetea_query_sql, na)
+        result2 = order_cursor_2.fetchall()
+        if len(result) != 0:
+            order_cursor_2.execute(sdb_b2c_order_sql, na)
+            order_2.commit()
+            s = s + sdb_b2c_order_sql + ";\n"
+        if len(result2) != 0:
+            order_cursor_2.execute(sdb_b2c_order_savetea_sql, na)
+            order_2.commit()
+            s = s + sdb_b2c_order_savetea_sql + ";\n"
     s = s
     s = s.replace('%s', str(user_id))
     # 用户注销操作记录
@@ -360,5 +298,5 @@ order_cursor_0.close()
 order_0.close()
 order_cursor_1.close()
 order_1.close()
-# order_cursor_2.close()
-# order_2.close()
+order_cursor_2.close()
+order_2.close()
