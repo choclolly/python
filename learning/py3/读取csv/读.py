@@ -4,6 +4,7 @@ import csv
 import csv
 
 with open('result.csv', encoding='utf-8') as f:
+    next(f)
     reader = csv.reader(f)
     header = next(reader)
     print(header)

@@ -141,7 +141,9 @@ else:
         sql = "SELECT order_no FROM sdb_b2c_order where pay_state = 1 " \
               "AND (receive_state = 0 or " \
               "(receive_state = 1 AND receive_time IS NOT NULL AND DATE_ADD(FROM_UNIXTIME(round(receive_time / 1000,0)), INTERVAL 10 DAY) > NOW())) " \
-              "AND order_type = 1 AND member_id = %s;"
+              "AND member_id = %s;"
+              # "AND order_type = 1 AND member_id = %s;"
+
         na = (user_id,)
         order_cursor.execute(sql, na)
         result = order_cursor.fetchall()
@@ -156,7 +158,8 @@ else:
                 user.commit()
             continue
         # 校验是否有未提取存茶订单
-        sql = "SELECT order_no FROM sdb_b2c_order_savetea WHERE member_id = %s AND (biz_no NOT IN (SELECT id FROM sdb_b2c_order_savetea) OR (biz_no IN (SELECT id FROM sdb_b2c_order_savetea) AND receive_state = 0))"
+        # sql = "SELECT order_no FROM sdb_b2c_order_savetea WHERE member_id = %s AND (biz_no NOT IN (SELECT id FROM sdb_b2c_order_savetea) OR (biz_no IN (SELECT id FROM sdb_b2c_order_savetea) AND receive_state = 0))"
+        sql = "SELECT order_no FROM sdb_b2c_order_savetea WHERE member_id = %s AND biz_no IN (SELECT id FROM sdb_b2c_order_savetea) AND receive_state = 0"
         na = (user_id,)
         order_cursor.execute(sql, na)
         result = order_cursor.fetchall()
@@ -192,7 +195,7 @@ for x in l_accord_with_condition_user_id:
     user_cursor.execute(uc_user_sql, na)
     result = user_cursor.fetchone()
     userNum = result[0]
-    uc_user_cancel_record_sql = "UPDATE uc_user_cancel_record SET verify_state = 3 where user_id = %s"
+    uc_user_cancel_record_sql = "UPDATE uc_user_cancel_record SET verify_state = 3 where user_id = %s and verify_state = 1"
     na = (user_id,)
     # 注销审核通过
     user_cursor.execute(uc_user_cancel_record_sql, na)

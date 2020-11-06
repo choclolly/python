@@ -3,7 +3,6 @@
 
 import http.cookiejar
 import urllib.request
-import bs4
 
 url = "http://www.baidu.com"
 response1 = urllib.request.urlopen(url)

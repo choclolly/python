@@ -100,11 +100,11 @@ else:
             user_cursor.execute(uc_user_cancel_record_sql, na)
             user.commit()
             continue
-        # 校验大益卡预存款余额是否为0
+
         sql = "SELECT amount from uc_account where user_id = %s;"
         na = (user_id,)
         user_cursor.execute(sql, na)
-        result = user_cursor.fetchone()
+        result = user_cursor.fetchone()# 校验大益卡预存款余额是否为0
         if result != 0 and result[0] > 0:
             print("大益卡预存款余额不为0,user_id:{},mobile:{},amount:{}".format(user_id, mobile, result[0]))
             d_balance = {'userId': user_id, 'mobile': mobile, 'amount': result[0]}
