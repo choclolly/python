@@ -9,7 +9,7 @@ p.prt(1, ' 集合')
         或者
         set(value
 '''
-
+R
 
 def c_set():
     basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}

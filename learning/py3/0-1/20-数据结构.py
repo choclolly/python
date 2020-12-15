@@ -116,7 +116,7 @@ def queue():
     print(queue)
 
 
-# queue()
+queue()
 
 
 p.prt(6, '列表推导式')
@@ -526,4 +526,4 @@ def iter_m():
     basket = ['apple', 'orange', 'apple', 'pear', 'orange', 'banana']
     for x in  sorted(basket):
         print(x,end=",")
-iter_m()
+# iter_m()

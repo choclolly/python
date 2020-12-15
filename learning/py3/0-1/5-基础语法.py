@@ -91,8 +91,14 @@ def multiline_statement():
     list_num = [1, 2, 3, 4,
                 5, 6,
                 7]
+    tuple_num = (1, 2, 3,
+             4, 5)
+    set_num = {1, 2, 3,
+           4, 5}
     print(sql)
     print(list_num)
+    print(tuple_num)
+    print(set_num)
 
 
 # multiline_statement()
@@ -150,7 +156,7 @@ def st_r():
 
     s = 'haodonghui'
     print(s)  # 输出字符串
-    print(s[-1])    # 输出字符串最后一个字符
+    print(s[-1])  # 输出字符串最后一个字符
     print(s[0:-1])  # 输出第一个到倒数第二个的所有字符
     print(s[0])  # 输出字符串第一个字符
     print(s[3:5])  # 输出从第三个开始到第五个的字符,不包含第五个字符
@@ -162,7 +168,7 @@ def st_r():
     print(r'hao\ndonghui')  # \n 换行, 在字符串前面添加一个 r，表示原始字符串，不会发生转义
 
 
-st_r()
+# st_r()
 
 '''
 空行
