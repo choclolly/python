@@ -100,7 +100,7 @@ def insert_many2():
 
 
 if __name__ == '__main__':
-    # insert_one()
-    inserted_id()
+     insert_one()
+    # inserted_id()
     # insert_many()
     # insert_many2()

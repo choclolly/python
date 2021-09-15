@@ -5,7 +5,7 @@ import pymongo
     在 MongoDB 中，数据库只有在内容插入后才会创建! 就是说，数据库创建后要创建集合(数据表)并插入一个文档(记录)，数据库才会真正创建。
 '''
 # 建立连接
-client = pymongo.MongoClient("47.94.173.249", 27017)
+client = pymongo.MongoClient("172.17.186.154", 27017)
 
 '''
 连接自己的mongodb
