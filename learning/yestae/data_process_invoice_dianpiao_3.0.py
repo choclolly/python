@@ -27,8 +27,8 @@ class DB:
         self.conn.close()
 
 
-filter_special_characters = u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])"
-
+# filter_special_characters = u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])"
+filter_special_characters = "['!#$%&\'*+,./:;<=>?@，。?★、…【】《》？“”‘'！[\\]^_`{|}~\s]+"
 '''
 根据sku获取订单商品信息,筛选已发货的订单
 '''
@@ -285,11 +285,12 @@ def get_order_invoice_info(order_id_order_delivery_no_dict):
 根据goodsSku查询商品相关属性
 '''
 # todo key:goodsSku,value:code
-goodsSku_code_dict = {'DS000102': '1004', 'DS000098': '1004', 'DB000227': '1001'}
+goodsSku_code_dict = {'DS000102': '1004', 'DS000098': '1004', 'DB000227': '1001', 'DS000103': '1004', 'DS000105': '1004'}
 # key:goodsSku,value:价格
-goodsSku_single_price = {'DS000102': 70.00, 'DS000098': 60.00, 'DB000227': 10120.00}
+goodsSku_single_price = {'DS000102': 70.00, 'DS000098': 60.00, 'DB000227': 10120.00, 'DS000103': 580.00, 'DS000105': 78.00}
 # key:goodsSku,value:发票服务名称
-goodsSku_invoice_service_name = {'DS000102': '大益文学《呼唤》21-2', 'DS000098': '大益文学《所向》21-1', 'DB000227': '357g仓颉号生饼（2101）'}
+goodsSku_invoice_service_name = {'DS000102': '大益文学《呼唤》21-2', 'DS000098': '大益文学《所向》21-1', 'DB000227': '357g仓颉号生饼（2101）'
+    , 'DS000103': '大益茶典2020', 'DS000105': '大益文学《现在》'}
 
 
 def get_goods_properties_by_goodsSku(goodsSku, order_delivery_no):

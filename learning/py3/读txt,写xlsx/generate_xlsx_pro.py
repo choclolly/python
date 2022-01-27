@@ -60,7 +60,7 @@ def read_csv(path):
                 custAddr = json_loads['custAddr']  # 详细地址
                 order_invoice_info_dict = {'orderId': orderId, 'memberName': memberName, 'custName': custName,
                                            'custTaxNo': custTaxNo,
-                                           'amount': amount, 'custPhone': custPhone, 'custAddr': custAddr,
+                                           'amount': amount, 'custPhone': custPhone,
                                            'orderDeliveryNo': orderDeliveryNo}
                 order_no_invoice_db_order_invoice_info_dict[orderDeliveryNo] = order_invoice_info_dict
                 order_no_order_id_dict[orderDeliveryNo] = orderId
@@ -72,6 +72,7 @@ def read_csv(path):
 '''
 order_no_invoice_yfphm_dict = {}
 order_id_order_db_order_invoice_info_dict = {}
+order_no_invoice_receiver_address_dict = {}
 
 
 def get_invoice_other_info(order_no_order_id_dict):
@@ -88,7 +89,9 @@ def get_invoice_other_info(order_no_order_id_dict):
                 result = db_invoice.fetchone()
                 if result:
                     invoiceYfphm = result[0]  # 发票号
+                    receiverAddress = result[5]  # 收票地址
                     order_no_invoice_yfphm_dict[order_delivery_no] = invoiceYfphm
+                    order_no_invoice_receiver_address_dict[order_delivery_no] = receiverAddress
     # 订单中心库
     with DB(host='order-mysql-master', port='3306', user='ebs_operate',
             passwd='7hayoHyOd5n7xADU',
@@ -126,13 +129,17 @@ def data_union(order_no_order_id_dict):
         for order_delivery_no, order_id in order_no_order_id_dict.items():
             invoice_info_one = order_no_invoice_db_order_invoice_info_dict[order_delivery_no]
             invoiceYfphm = ''
+            receiverAddress = ''
             if order_delivery_no in order_no_invoice_yfphm_dict:
                 invoiceYfphm = order_no_invoice_yfphm_dict[order_delivery_no]
+            if order_delivery_no in order_no_invoice_receiver_address_dict:
+                receiverAddress = order_no_invoice_receiver_address_dict[order_delivery_no]
             invoice_info_two = order_id_order_db_order_invoice_info_dict[order_id]
 
             invoicd_info_dict = invoice_info_one.copy()
             invoicd_info_dict.update(invoice_info_two)
             invoicd_info_dict['invoiceYfphm'] = invoiceYfphm
+            invoicd_info_dict['custAddr'] = receiverAddress
 
             order_no_invoicd_info_dict[order_delivery_no] = invoicd_info_dict
 

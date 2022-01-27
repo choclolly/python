@@ -27,7 +27,8 @@ class DB:
         self.conn.close()
 
 
-filter_special_characters = u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])"
+# filter_special_characters = u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])"
+filter_special_characters = "['!#$%&\'*+,./:;<=>?@，。?★、…【】《》？“”‘'！[\\]^_`{|}~\s]+"
 
 '''
 根据sku获取订单商品信息,筛选已发货的订单
